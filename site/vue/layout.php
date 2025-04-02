@@ -48,24 +48,13 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="index.php?action=afficheBateau">Navires</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?action=affichePort">Gares maritimes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?action=afficheSecteur">Destinations</a>
-                </li>
-
-
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     partie CRUD
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li>
-                        <a class="dropdown-item" href="index.php?action=modifieBateau">Modifier les bateaux</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item disabled" href="index.php?action=modifiePort" >Modifier les ports</a>
+                        <a class="dropdown-item" href="index.php?action=modifierBateau">Modifier les bateaux</a>
                     </li>
                 </ul>
                 </li>
