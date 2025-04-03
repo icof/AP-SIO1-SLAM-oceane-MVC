@@ -34,24 +34,55 @@ function afficherCRUDBateaux() {
     ];
 }
 
-function ajouterBateau() {
-    if (isset($_POST['ajouter'])) {
-        $nom = $_POST['nom'];
-        $niveauPMR = $_POST['niveauPMR'];
-        $capacite = $_POST['capacite'];
-        $image = $_FILES['image']['name'];
+function ChargerModale(string $action, ? string $id) {
 
-        // Déplacer le fichier téléchargé vers le répertoire de destination
-        move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . '/../images/' . $image);
-
-        // Appeler la fonction pour ajouter le bateau
-        insertBateau($nom, $niveauPMR, $capacite, $image);
+    if ($id !== "") {
+        $id = intval($id);
+    }
+    switch ($action) {
+        case 'add':
+            $view = __DIR__ . '/../vue/bateauCRUD/bateauCrudAddModale_vue.php';
+            $data = [
+                'bateau' => null,
+                'lesNiveauxPMR' => getNiveauxAccessibilite()
+            ];
+            break;
+        case 'edit':
+            $view = __DIR__ . '/../vue/bateauCRUD/bateauCrudEditModale_vue.php';
+            $data = [
+                'bateau' => getBateauById($id),
+                'lesNiveauxPMR' => getNiveauxAccessibilite()
+            ];
+            break;
+        case 'delete':
+            $view = __DIR__ . '/../vue/bateauCRUD/bateauCrudDeleteModale_vue.php';
+            $data = [
+                'bateau' => getBateauById($id)
+            ];
+            break;
+        default:
+            throw new Exception("Action non reconnue");
     }
 
     // Retourner le chemin de la vue et les données
     return [
-        'view' => __DIR__ . '/../vue/ajouter_bateau_vue.php',
-        'data' => []
+        'view' => $view,
+        'data' => $data
     ];
+
+}
+
+function ajouterBateau() {
+    $nom = $_POST['nom'];
+    $niveauPMR = $_POST['niveauPMR'];
+    $image = $_FILES['image']['name'];
+
+    // Déplacer le fichier téléchargé vers le répertoire de destination
+    move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . '/../images/bateaux/' . $image);
+
+    // Appeler la fonction pour ajouter le bateau
+    $msg = insertBateau($nom, $niveauPMR, $image);
+    afficherCRUDBateaux();
+
 }
 

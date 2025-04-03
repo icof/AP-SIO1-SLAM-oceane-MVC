@@ -11,7 +11,7 @@ ob_start();
 <h1 class="page-header text-center">Nos Navires</h1>
 <p>Bienvenue à bord ! Découvrez notre flotte et les caractéristiques de nos différents ferries.</p><br>
 
-<form method="post" action="index.php?action=afficheBateau">
+<form method="post" action="index.php?p=afficheBateau">
     <div>
         <label for="niveauPMR">Niveau d'accessibilité :</label>
         <select name="niveauPMR">

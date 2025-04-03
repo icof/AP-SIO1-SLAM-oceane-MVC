@@ -1,3 +1,16 @@
+<?php
+// Définir les variables spécifiques à cette vue
+$title = "Nos navires";
+$keywords = "bateaux, ferries, accessibilité";
+$description = "Découvrez notre flotte et les caractéristiques de nos différents ferries.";
+
+// Capturer le contenu spécifique dans une variable
+ob_start();
+?>
+
+<h1 class="page-header text-center">Nos Navires</h1>
+<p>Bienvenue à bord ! Découvrez notre flotte et les caractéristiques de nos différents ferries.</p><br>
+
 <!-- Modale vide pour AJAX -->
 <div class="modal fade" id="ajaxModal" tabindex="-1" aria-labelledby="ajaxModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -24,6 +37,7 @@
                 <?= $_SESSION['error'] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+
             <?php
             unset($_SESSION['error']);
         }
@@ -39,9 +53,10 @@
     ?>
     </div>
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnew">
-        Ajouter
+    <button type="button" class="btn btn-primary btn-sm open-ajax-modal" data-action="add" style="margin-bottom: 10px;">
+        <i class="bi bi-plus-circle-fill"></i> Ajouter
     </button>
+    <br>
     <div class="height10">
     </div>
 </div>
@@ -90,12 +105,14 @@ $(document).ready(function(){
 $(document).ready(function() {
     // Gérer l'ouverture de la modale AJAX
     $('.open-ajax-modal').on('click', function() {
-        const id = $(this).data('id'); // Récupérer l'ID du bateau
-        const action = $(this).data('action'); // Récupérer l'action (edit ou delete)
+        const id = $(this).data('id') || null; // Récupérer l'ID du bateau (null si action = add)
+        const action = $(this).data('action'); // Récupérer l'action (add, edit ou delete)
         const modal = $('#ajaxModal'); // Sélectionner la modale
 
-        // Modifier le titre de la modale
-        if (action === 'edit') {
+        // Modifier le titre de la modale en fonction de l'action
+        if (action === 'add') {
+            modal.find('.modal-title').text('Ajouter un bateau');
+        } else if (action === 'edit') {
             modal.find('.modal-title').text('Modifier le bateau');
         } else if (action === 'delete') {
             modal.find('.modal-title').text('Supprimer le bateau');
@@ -103,7 +120,7 @@ $(document).ready(function() {
 
         // Charger le contenu via AJAX
         $.ajax({
-            url: 'crudBateau/ajax_handler.php', // URL du script PHP pour gérer la requête
+            url: '?p=chargerModaleBateau', 
             method: 'POST',
             data: { id: id, action: action },
             success: function(response) {
@@ -118,3 +135,7 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<?php
+$content = ob_get_clean(); // Stocker le contenu dans une variable
+include 'layout.php'; // Inclure le layout

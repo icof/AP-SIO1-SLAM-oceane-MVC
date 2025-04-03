@@ -46,7 +46,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="index.php?action=afficheBateau">Navires</a>
+                    <a class="nav-link" aria-current="page" href="index.php?p=afficheBateau">Navires</a>
                 </li>
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,15 +54,15 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li>
-                        <a class="dropdown-item" href="index.php?action=modifierBateau">Modifier les bateaux</a>
+                        <a class="dropdown-item" href="index.php?p=afficherCRUDBateau">Modifier les bateaux</a>
                     </li>
                 </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="index.php?action=connexion" tabindex="-1" aria-disabled="true">connexion</a>
+                    <a class="nav-link disabled" href="index.php?p=connexion" tabindex="-1" aria-disabled="true">connexion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="index.php?action=deconnexion" tabindex="-1" aria-disabled="true">deconnexion</a>
+                    <a class="nav-link disabled" href="index.php?p=deconnexion" tabindex="-1" aria-disabled="true">deconnexion</a>
                 </li>
             </ul>
             </div>

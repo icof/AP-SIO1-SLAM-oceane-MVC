@@ -43,7 +43,7 @@ function getBateauById(int $idBateau) : array {
     return $result;
 }
 
-function insertBateau(string $nom, int $niveauPMR, int $capacite, string $image) : string{
+function insertBateau(string $nom, int $niveauPMR, string $image) : string{
     try {
         // Insertion du bateau dans la base de données
         $connexion = getPDO(); // Utilisation de la connexion à la base de données
@@ -54,12 +54,11 @@ function insertBateau(string $nom, int $niveauPMR, int $capacite, string $image)
         $lastId = $stmt->fetch();
         $newId = (int)$lastId[0] + 1;
 
-        $SQL = "INSERT INTO bateau (id, nom, niveauPMR, capacite, image) VALUES (:id, :nom, :niveauPMR, :capacite, :image)";
+        $SQL = "INSERT INTO bateau (id, nom, niveauPMR, photo) VALUES (:id, :nom, :niveauPMR, :image)";
         $stmt = $connexion->prepare($SQL);
         $stmt->bindParam(':id', $newId, PDO::PARAM_INT);
         $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
         $stmt->bindParam(':niveauPMR', $niveauPMR, PDO::PARAM_INT);
-        $stmt->bindParam(':capacite', $capacite, PDO::PARAM_INT);
         $stmt->bindParam(':image', $image, PDO::PARAM_STR);
         $stmt->execute();
         $stmt->closeCursor();
