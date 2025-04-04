@@ -68,16 +68,15 @@ function insertBateau(string $nom, int $niveauPMR, string $image) : string{
     }
 }
 
-function updateBateau(int $id, string $nom, int $niveauPMR, int $capacite, string $image) : string {
+function updateBateau(int $id, string $nom, int $niveauPMR, string $image) : string {
     try {
         // Mise à jour du bateau dans la base de données
         $connexion = getPDO(); // Utilisation de la connexion à la base de données
-        $SQL = "UPDATE bateau SET nom = :nom, niveauPMR = :niveauPMR, capacite = :capacite, image = :image WHERE id = :id";
+        $SQL = "UPDATE bateau SET nom = :nom, niveauPMR = :niveauPMR, photo = :image WHERE id = :id";
         $stmt = $connexion->prepare($SQL);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
         $stmt->bindParam(':niveauPMR', $niveauPMR, PDO::PARAM_INT);
-        $stmt->bindParam(':capacite', $capacite, PDO::PARAM_INT);
         $stmt->bindParam(':image', $image, PDO::PARAM_STR);
         $stmt->execute();
         $stmt->closeCursor();

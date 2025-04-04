@@ -82,7 +82,56 @@ function ajouterBateau() {
 
     // Appeler la fonction pour ajouter le bateau
     $msg = insertBateau($nom, $niveauPMR, $image);
-    afficherCRUDBateaux();
+    $_SESSION["success"] = $msg;
+    //redirection vers la page de gestion des bateaux
+    header('Location: index.php?p=afficherCRUDBateau');
+    exit();
+}
 
+function modifierBateau() {
+    $id = $_POST['id'];
+    $nom = $_POST['nom'];
+    $niveauPMR = $_POST['niveauPMR'];
+    $ancienneImage = $_POST['imageOld'];
+
+    // Vérifier si une nouvelle image a été téléchargée
+    if ($_FILES['image']['name'] != "") {
+        $image = $_FILES['image']['name'];
+        // Déplacer le fichier téléchargé vers le répertoire de destination
+        move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . '/../images/bateaux/' . $image);
+        // Supprimer l'ancienne image du répertoire
+        if (file_exists(__DIR__ . '/../images/bateaux/' . $ancienneImage)) {
+            unlink(__DIR__ . '/../images/bateaux/' . $ancienneImage);
+        }
+    } else {
+        // Si aucune nouvelle image n'a été téléchargée, conserver l'ancienne image
+        $bateau = getBateauById($id);
+        $image = $bateau['photo'];
+    }
+
+    // Appeler la fonction pour modifier le bateau
+    $msg = updateBateau($id, $nom, $niveauPMR, $image);
+    $_SESSION["success"] = $msg;
+    //redirection vers la page de gestion des bateaux
+    header('Location: index.php?p=afficherCRUDBateau');
+    exit();
+}
+
+function supprimerBateau() {
+    $id = $_POST['id'];
+    $bateau = getBateauById($id);
+    $image = $bateau['photo'];
+
+    // Supprimer l'image du répertoire
+    if (file_exists(__DIR__ . '/../images/bateaux/' . $image)) {
+        unlink(__DIR__ . '/../images/bateaux/' . $image);
+    }
+
+    // Appeler la fonction pour supprimer le bateau
+    $msg = deleteBateau($id);
+    $_SESSION["success"] = $msg;
+    //redirection vers la page de gestion des bateaux
+    header('Location: index.php?p=afficherCRUDBateau');
+    exit();
 }
 

@@ -26,20 +26,13 @@
             </div>
             <div class="row form-group">
                 <div class="col-sm-2">
-                    <label class="control-label modal-label">Capacité:</label>
-                </div>
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" name="capacite" value="<?php echo $bateau['capacite']; ?>">
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-sm-2">
                     <label class="control-label modal-label">Image:</label>
                 </div>
                 <div class="col-sm-10">
                     <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png">
-                    <img src="<?php echo $bateau['image']; ?>" alt="<?php echo $bateau['nom']; ?>" width="100" height="100">
+                    <img src="/images/bateaux/<?php echo $bateau['photo']; ?>" alt="<?php echo $bateau['nom']; ?>" height="100">
                 </div>
+                <input type="hidden" name="imageOld" value="<?php echo $bateau['photo']; ?>">
             </div>
         </div>
     </div>
@@ -48,7 +41,7 @@
             <i class="bi bi-x-circle"></i> Annuler
         </button>
         <button type="submit" name="edit" class="btn btn-success">
-            <i class="bi bi-download"></i> Enregistrer
+            <i class="bi bi-pencil-square"></i> Modifier
         </button>
     </div>
 </form>
