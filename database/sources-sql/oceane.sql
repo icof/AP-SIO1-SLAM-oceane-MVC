@@ -1,9 +1,10 @@
 USE oceane;
--- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
+/*M!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: oceane
 -- ------------------------------------------------------
--- Server version	10.11.6-MariaDB-0+deb12u1
+-- Server version	10.11.11-MariaDB-0+deb12u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -22,7 +23,7 @@ USE oceane;
 
 DROP TABLE IF EXISTS `bateau`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bateau` (
   `id` tinyint(3) unsigned NOT NULL,
   `nom` varchar(100) NOT NULL,
@@ -60,7 +61,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `bateau_secteur`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bateau_secteur` (
   `idBateau` tinyint(3) unsigned NOT NULL,
   `idSecteur` tinyint(3) unsigned NOT NULL,
@@ -94,7 +95,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `categorie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categorie` (
   `idCategorie` varchar(2) NOT NULL,
   `libelleCategorie` varchar(100) NOT NULL,
@@ -120,7 +121,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `contenance_bateau`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contenance_bateau` (
   `idBateau` tinyint(3) unsigned NOT NULL,
   `lettreCategorie` varchar(2) NOT NULL,
@@ -160,7 +161,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `detail_reservation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `detail_reservation` (
   `numReservation` int(10) unsigned NOT NULL,
   `numType` tinyint(3) unsigned NOT NULL,
@@ -194,7 +195,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `liaison`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `liaison` (
   `code` tinyint(3) unsigned NOT NULL,
   `codeSecteur` tinyint(3) unsigned NOT NULL,
@@ -235,7 +236,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `niveau_accessibilite`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `niveau_accessibilite` (
   `idNiveau` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) NOT NULL,
@@ -263,7 +264,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `periode`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `periode` (
   `idPeriode` varchar(5) NOT NULL,
   `libellePeriode` varchar(200) NOT NULL,
@@ -290,7 +291,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `port`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `port` (
   `nom_court` varchar(50) NOT NULL,
   `nom` varchar(100) NOT NULL,
@@ -324,7 +325,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `reservation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reservation` (
   `num` int(10) unsigned NOT NULL,
   `nom` varchar(100) NOT NULL,
@@ -350,12 +351,39 @@ INSERT INTO `reservation` VALUES
 UNLOCK TABLES;
 
 --
+-- Table structure for table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomRole` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nomRole` (`nomRole`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role`
+--
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES
+(1,'administrateur'),
+(2,'gestionnaire');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `secteur`
 --
 
 DROP TABLE IF EXISTS `secteur`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `secteur` (
   `id` tinyint(3) unsigned NOT NULL,
   `nom` varchar(100) NOT NULL,
@@ -385,7 +413,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tarification`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tarification` (
   `idCategorie` varchar(2) NOT NULL,
   `idTypeBillet` tinyint(3) unsigned NOT NULL,
@@ -451,7 +479,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `traversee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `traversee` (
   `num` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
@@ -983,7 +1011,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `type_billet`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `type_billet` (
   `idCategorie` varchar(2) NOT NULL,
   `idTypeBillet` tinyint(3) unsigned NOT NULL,
@@ -1021,6 +1049,66 @@ INSERT INTO `type_billet` VALUES
 ('VE',12,'Chargement extérieur 2 (Hauteur de véhicule + galerie chargée supérieurs à 2,10 m) ou porte-vélos');
 /*!40000 ALTER TABLE `type_billet` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `utilisateur`
+--
+
+DROP TABLE IF EXISTS `utilisateur`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `utilisateur` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mailU` varchar(150) NOT NULL,
+  `mdpU` varchar(255) DEFAULT NULL,
+  `pseudoU` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mailU` (`mailU`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `utilisateur`
+--
+
+LOCK TABLES `utilisateur` WRITE;
+/*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
+INSERT INTO `utilisateur` VALUES
+(1,'test@bts.sio','seSzpoUAQgIl.','testeur SIO');
+/*!40000 ALTER TABLE `utilisateur` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `utilisateur_role`
+--
+
+DROP TABLE IF EXISTS `utilisateur_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `utilisateur_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `utilisateur_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `date_activation` date DEFAULT curdate(),
+  `date_desactivation` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `utilisateur_id` (`utilisateur_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `utilisateur_role_ibfk_1` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `utilisateur_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `utilisateur_role`
+--
+
+LOCK TABLES `utilisateur_role` WRITE;
+/*!40000 ALTER TABLE `utilisateur_role` DISABLE KEYS */;
+INSERT INTO `utilisateur_role` VALUES
+(1,1,1,'2024-01-01',NULL);
+/*!40000 ALTER TABLE `utilisateur_role` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1031,4 +1119,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-07 20:36:37
+-- Dump completed on 2025-04-06 19:24:53

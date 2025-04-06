@@ -43,7 +43,7 @@ function getBateauById(int $idBateau) : array {
     return $result;
 }
 
-function insertBateau(string $nom, int $niveauPMR, string $image) : string{
+function insertBateau(string $nom, int $niveauPMR, string $image) : array{
     try {
         // Insertion du bateau dans la base de données
         $connexion = getPDO(); // Utilisation de la connexion à la base de données
@@ -62,13 +62,17 @@ function insertBateau(string $nom, int $niveauPMR, string $image) : string{
         $stmt->bindParam(':image', $image, PDO::PARAM_STR);
         $stmt->execute();
         $stmt->closeCursor();
-        return "Bateau ajouté avec succès !";
+        $message['message'] = "Bateau ajouté avec succès !";
+        $message['status'] = "success";
+        return $message;
     } catch (Exception $e) {
-        return "Erreur lors de l'ajout du bateau : " . $e->getMessage();
+        $message['message'] = "Erreur lors de l'ajout du bateau : " . $e->getMessage();
+        $message['status'] = "error";
+        return $message;
     }
 }
 
-function updateBateau(int $id, string $nom, int $niveauPMR, string $image) : string {
+function updateBateau(int $id, string $nom, int $niveauPMR, string $image) : array {
     try {
         // Mise à jour du bateau dans la base de données
         $connexion = getPDO(); // Utilisation de la connexion à la base de données
@@ -80,13 +84,17 @@ function updateBateau(int $id, string $nom, int $niveauPMR, string $image) : str
         $stmt->bindParam(':image', $image, PDO::PARAM_STR);
         $stmt->execute();
         $stmt->closeCursor();
-        return "Bateau mis à jour avec succès !";
-    } catch (Exception $e) {
-        return "Erreur lors de la mise à jour du bateau : " . $e->getMessage();
+        $message['message'] = "Bateau mis à jour avec succès !";
+        $message['status'] = "success";
+        return $message;
+    } catch (Exception $e) {   
+        $message['message'] = "Erreur lors de la mise à jour du bateau : " . $e->getMessage();
+        $message['status'] = "error";
+        return $message;
     }
 }
 
-function deleteBateau(int $id) : string {
+function deleteBateau(int $id) : array {
     try {
         // Suppression du bateau dans la base de données
         $connexion = getPDO(); // Utilisation de la connexion à la base de données
@@ -95,8 +103,12 @@ function deleteBateau(int $id) : string {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $stmt->closeCursor();
-        return "Bateau supprimé avec succès !";
+        $message['message'] = "Bateau supprimé avec succès !";
+        $message['status'] = "success";
+        return $message;
     } catch (Exception $e) {
-        return "Erreur lors de la suppression du bateau : " . $e->getMessage();
+        $message['message'] = "Erreur lors de la suppression du bateau : " . $e->getMessage();
+        $message['status'] = "error";
+        return $message;
     }
 }

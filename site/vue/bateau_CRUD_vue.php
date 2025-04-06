@@ -8,9 +8,6 @@ $description = "Découvrez notre flotte et les caractéristiques de nos différe
 ob_start();
 ?>
 
-<h1 class="page-header text-center">Nos Navires</h1>
-<p>Bienvenue à bord ! Découvrez notre flotte et les caractéristiques de nos différents ferries.</p><br>
-
 <!-- Modale vide pour AJAX -->
 <div class="modal fade" id="ajaxModal" tabindex="-1" aria-labelledby="ajaxModalLabel" aria-hidden="true">
     <div class="modal-dialog">

@@ -35,7 +35,6 @@ function afficherCRUDBateaux() {
 }
 
 function ChargerModale(string $action, ? string $id) {
-
     if ($id !== "") {
         $id = intval($id);
     }
@@ -74,18 +73,31 @@ function ChargerModale(string $action, ? string $id) {
 
 function ajouterBateau() {
     $nom = $_POST['nom'];
-    $niveauPMR = $_POST['niveauPMR'];
-    $image = $_FILES['image']['name'];
+    $niveauPMR = intval($_POST['niveauPMR']);
+    $image = $_FILES['image'];
 
-    // Déplacer le fichier téléchargé vers le répertoire de destination
-    move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . '/../images/bateaux/' . $image);
+    // Vérifier si un fichier a été uploadé
+    if ($image['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . '/../images/bateaux/';
+        $uploadFile = $uploadDir . basename($image['name']);
 
-    // Appeler la fonction pour ajouter le bateau
-    $msg = insertBateau($nom, $niveauPMR, $image);
-    $_SESSION["success"] = $msg;
-    //redirection vers la page de gestion des bateaux
-    header('Location: index.php?p=afficherCRUDBateau');
-    exit();
+        // Déplacer le fichier uploadé
+        if (move_uploaded_file($image['tmp_name'], $uploadFile)) {
+            // Appeler le modèle pour insérer le bateau
+            $msg = insertBateau($nom, $niveauPMR, $image['name']);
+
+            $_SESSION[$msg['status']] = $msg['message'];
+        } else {
+            $_SESSION['error'] = "Erreur lors du déplacement du fichier.";
+        }
+    } else {
+        $_SESSION['error'] = "Erreur lors de l'upload de l'image.";
+    }
+
+
+    // Rediriger vers la page CRUD
+    header('Location: ?p=afficherCRUDBateau');
+    exit;
 }
 
 function modifierBateau() {
@@ -111,7 +123,7 @@ function modifierBateau() {
 
     // Appeler la fonction pour modifier le bateau
     $msg = updateBateau($id, $nom, $niveauPMR, $image);
-    $_SESSION["success"] = $msg;
+    $_SESSION[$msg['status']] = $msg['message'];
     //redirection vers la page de gestion des bateaux
     header('Location: index.php?p=afficherCRUDBateau');
     exit();
@@ -129,7 +141,7 @@ function supprimerBateau() {
 
     // Appeler la fonction pour supprimer le bateau
     $msg = deleteBateau($id);
-    $_SESSION["success"] = $msg;
+    $_SESSION[$msg['status']] = $msg['message'];
     //redirection vers la page de gestion des bateaux
     header('Location: index.php?p=afficherCRUDBateau');
     exit();
