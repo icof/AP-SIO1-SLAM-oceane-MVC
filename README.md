@@ -25,7 +25,7 @@ Ce dépôt est configuré pour fonctionner avec les Codespaces de GitHub et les 
 !important! 
 Pour être executables, les scripts bash executés dans le codespace (start.sh, stop.sh, initBDD.sh, ...) doivent avoir les bonnes permissions.
 
-Utilisez la commande ```ls -l``` pour afficher les permissions des fichiers dans le répertoire contenant vos scripts bash.
+1. Utilisez la commande ```ls -l``` pour afficher les permissions des fichiers dans le répertoire contenant vos scripts bash.
 Cela affichera les permissions actuelles des fichiers. Les scripts doivent avoir l'autorisation d'exécution (x) pour être exécutables.
 
 2. Ajouter les droits d'exécution
@@ -47,7 +47,7 @@ Si les scripts n'ont pas les bonnes permissions, utilisez la commande chmod pour
      ```bash
      ./start.sh
      ```
-   Ce script démarre le serveur PHP intégré sur le port 8000, démarre maraidb et crée la base métier depuis le script renseigné (mettre à jour en fonction du projet).
+   Ce script démarre le serveur PHP intégré sur le port 8000, démarre mariadb et crée la base métier depuis le script renseigné (mettre à jour en fonction du projet).
 
 2. **Ouvrir le service php dans un navigateur** :
    - Accédez à `http://localhost:8000` pour voir la page d'accueil de l'API.
