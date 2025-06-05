@@ -142,3 +142,31 @@ Une fois le test ajouté, relancez la commande PHPUnit pour vérifier son bon fo
 ## Documentation
 
 Ce projet utilise phpDocumentor pour la documentation technique.
+
+
+
+add phpDocumentor as a dependency by running the following command:
+
+$ composer require phpdocumentor/shim
+
+This will install the shim package that will download the latest version of phpDocumentor and make it available in your project. You can then run phpDocumentor by calling the following command:
+
+```
+vendor/bin/phpdoc run -d . -t site/documentation
+```
+
+
+You can download the latest PHAR file from https://phpdoc.org/phpDocumentor.phar or a specific version from https://github.com/phpDocumentor/phpDocumentor/releases.
+
+The phar file can be used by invoking PHP directly and providing the phar file as a parameter:
+
+$ php phpDocumentor.phar run -d . -t docs/api
+
+or, on Mac and Linux, you can mark it as executable and move it to your bin folder:
+
+$ chmod +x phpDocumentor.phar
+$ mv phpDocumentor.phar /usr/local/bin/phpDocumentor
+
+After that you can run it globally:
+
+$ phpDocumentor run -d . -t docs/api
