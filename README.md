@@ -141,26 +141,35 @@ Une fois le test ajouté, relancez la commande PHPUnit pour vérifier son bon fo
 
 ## Documentation
 
-Ce projet utilise phpDocumentor pour la documentation technique.
+**phpDocumentor** est un outil qui permet de générer automatiquement la documentation technique de votre code PHP à partir des commentaires présents dans vos fichiers source.
 
-Le dossier phpDocumentor contient le fichier PHAR de phpDocumentor. Si besoin, vous pouvez télécharger le dernier fichier PHAR à partir de https://phpdoc.org/phpDocumentor.phar ou une version spécifique à partir de https://github.com/phpDocumentor/phpDocumentor/releases et remplacer ce fichier.
+**Fonctionnement :**
+- *Commentaires PHPDoc* : Vous commentez vos classes, fonctions et propriétés avec des blocs de commentaires spéciaux (PHPDoc).
+- *Génération automatique* : phpDocumentor analyse ces commentaires et crée une documentation HTML structurée et navigable.
+- *Personnalisation* : Vous pouvez choisir le dossier à documenter (```-d ./site```) et le dossier de sortie (```-t ./documentation```).
 
-Pour executer phpDocumentor et générer la documentation, allez dan sle dossier documentation et invoquez le avec php :
-
+**Exemple de commentaire PHPDoc :**
+```php
+<?php
+/**
+ * Additionne deux nombres.
+ *
+ * @param int $a
+ * @param int $b
+ * @return int
+ */
+function addition(int $a, int $b) : int {
+    return $a + $b;
+}
 ```
-cd documentation
-php phpDocumentor.phar run -d ../site -t .
+plus d'infos sur [le guide phpDocumentor](https://docs.phpdoc.org/guide/getting-started/what-is-a-docblock.html#what-is-a-docblock)
+
+**Commande de génération :**
 ```
-
-ou, sur Mac et Linux, vous pouvez le marquer comme exécutable et le déplacer dans votre dossier bin :
-
+php phpDocumentor.phar run -d ./site -t ./documentation
 ```
-chmod +x phpDocumentor.phar
-sudo mv phpDocumentor.phar /usr/local/bin/phpDocumentor
-```
+- ```-d ./site``` : dossier contenant le code à documenter.
+- ```-t ./documentation``` : dossier où sera générée la documentation HTML.
 
-Ensuite, vous pouvez l'exécuter globalement :
-
-phpDocumentor run -d . -t site/documentation
-
-Traduit avec DeepL.com (version gratuite)
+**Résultat :**
+Après exécution, ouvrez le fichier index.html sur le serveur executé sur le port 8001 dans un navigateur pour consulter la documentation de votre projet.
