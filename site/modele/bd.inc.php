@@ -1,4 +1,8 @@
 <?php
+/** Fonction pour obtenir une connexion PDO unique (Singleton)
+ * @package modele
+ * @version 1.0
+ */
 
 /**
  * Fonction pour obtenir une connexion PDO unique (Singleton)

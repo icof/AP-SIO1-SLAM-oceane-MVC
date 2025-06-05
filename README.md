@@ -143,30 +143,24 @@ Une fois le test ajouté, relancez la commande PHPUnit pour vérifier son bon fo
 
 Ce projet utilise phpDocumentor pour la documentation technique.
 
+Le dossier phpDocumentor contient le fichier PHAR de phpDocumentor. Si besoin, vous pouvez télécharger le dernier fichier PHAR à partir de https://phpdoc.org/phpDocumentor.phar ou une version spécifique à partir de https://github.com/phpDocumentor/phpDocumentor/releases et remplacer ce fichier.
 
-
-add phpDocumentor as a dependency by running the following command:
-
-$ composer require phpdocumentor/shim
-
-This will install the shim package that will download the latest version of phpDocumentor and make it available in your project. You can then run phpDocumentor by calling the following command:
+Pour executer phpDocumentor et générer la documentation, allez dan sle dossier documentation et invoquez le avec php :
 
 ```
-vendor/bin/phpdoc run -d . -t site/documentation
+cd documentation
+php phpDocumentor.phar run -d ../site -t .
 ```
 
+ou, sur Mac et Linux, vous pouvez le marquer comme exécutable et le déplacer dans votre dossier bin :
 
-You can download the latest PHAR file from https://phpdoc.org/phpDocumentor.phar or a specific version from https://github.com/phpDocumentor/phpDocumentor/releases.
+```
+chmod +x phpDocumentor.phar
+sudo mv phpDocumentor.phar /usr/local/bin/phpDocumentor
+```
 
-The phar file can be used by invoking PHP directly and providing the phar file as a parameter:
+Ensuite, vous pouvez l'exécuter globalement :
 
-$ php phpDocumentor.phar run -d . -t docs/api
+phpDocumentor run -d . -t site/documentation
 
-or, on Mac and Linux, you can mark it as executable and move it to your bin folder:
-
-$ chmod +x phpDocumentor.phar
-$ mv phpDocumentor.phar /usr/local/bin/phpDocumentor
-
-After that you can run it globally:
-
-$ phpDocumentor run -d . -t docs/api
+Traduit avec DeepL.com (version gratuite)

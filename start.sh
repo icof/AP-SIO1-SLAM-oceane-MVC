@@ -3,6 +3,8 @@
 
 # Définir le chemin vers les dossiers web et web/API
 WEB_DIR="site"
+DOC_DIR="documentation"
+
 phpMyAdmin_DIR="../../usr/src/phpmyadmin"
 
 # Créer le répertoire /run/mysqld si nécessaire et définir les permissions
@@ -35,6 +37,15 @@ if is_port_in_use $WEB_PORT; then
 else
     echo "Démarrage du serveur PHP sur http://0.0.0.0:$WEB_PORT depuis $WEB_DIR"
     php -S 0.0.0.0:$WEB_PORT -t $WEB_DIR &
+fi
+
+# Démarrage du serveur PHP pour le dossier doc
+DOC_PORT=8001
+if is_port_in_use $DOC_PORT; then
+    echo "Le serveur PHP pour le dossier doc est déjà démarré sur le port $DOC_PORT"
+else
+    echo "Démarrage du serveur PHP pour le dossier doc sur http://0.0.0.0:$DOC_PORT depuis $DOC_DIR"
+    php -S 0.0.0.0:$DOC_PORT -t $DOC_DIR &
 fi
 
 # Démarrage du serveur PHP pour phpMyAdmin

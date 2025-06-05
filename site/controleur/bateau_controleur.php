@@ -1,9 +1,18 @@
 <?php
-
+/** Contrôleur pour gérer les bateaux dans l'application.
+* Il inclut les fonctions pour afficher la liste des bateaux, gérer le CRUD, et charger les vues modales.
+* 
+* @package controleur
+*/
 include_once __DIR__ . '/../modele/bateau_modele.php';
 
-
-function afficherBateaux() {
+/**
+ * Fonction pour afficher la liste des bateaux en fonction du niveau d'accessibilité PMR sélectionné.
+ * Elle récupère les niveaux d'accessibilité et les bateaux correspondants, puis retourne le chemin de la vue et les données nécessaires.
+ *
+ * @return array Un tableau contenant le chemin de la vue et les données
+ */
+function afficherBateaux() : array {
     $lesNiveauxPMR = getNiveauxAccessibilite();
     if ((isset($_POST['niveauPMR'])) && ($_POST['niveauPMR'] != "")){
         $niveauPMR = $_POST['niveauPMR'];
@@ -22,7 +31,13 @@ function afficherBateaux() {
     ];
 }
 
-function afficherCRUDBateaux() {
+/**
+ * Fonction pour afficher la page de gestion des bateaux (CRUD).
+ * Elle récupère tous les bateaux et les niveaux d'accessibilité, puis retourne le chemin de la vue et les données nécessaires.
+ *
+ * @return array Un tableau contenant le chemin de la vue et les données
+ */
+function afficherCRUDBateaux() : array {
     $lesBateaux = getTousLesBateaux();
 
     // Retourner le chemin de la vue et les données
@@ -34,7 +49,15 @@ function afficherCRUDBateaux() {
     ];
 }
 
-function ChargerModale(string $action, ? string $id) {
+/**
+ * Fonction pour charger la vue modale en fonction de l'action demandée (add, edit, delete).
+ * Elle retourne le chemin de la vue et les données nécessaires pour la modale.
+ *
+ * @param string $action L'action à effectuer (add, edit, delete)
+ * @param string|null $id L'ID du bateau (null si action = add)
+ * @return array Un tableau contenant le chemin de la vue et les données
+ */
+function ChargerModale(string $action, ? string $id) : array {
     if ($id !== "") {
         $id = intval($id);
     }
@@ -71,7 +94,14 @@ function ChargerModale(string $action, ? string $id) {
 
 }
 
-function ajouterBateau() {
+/**
+ * Fonction pour ajouter un bateau qui a été soumis via un formulaire. 
+ * Cette fonction gère l'upload de l'image et appelle le modèle pour insérer le bateau dans la base de données.
+ * Liste des paramètres récupérés depuis $_POST : nom, niveauPMR
+ * Liste des paramètres récupérés depuis $_FILES : image
+ * @return void
+ */
+function ajouterBateau() : void {
     $nom = $_POST['nom'];
     $niveauPMR = intval($_POST['niveauPMR']);
     $image = $_FILES['image'];
@@ -100,7 +130,14 @@ function ajouterBateau() {
     exit;
 }
 
-function modifierBateau() {
+/**
+ * Fonction pour modifier un bateau qui a été soumis via un formulaire. 
+ * Cette fonction met à jour les informations du bateau dans la base de données et gère l'image associée.
+ * Liste des paramètres récupérés depuis $_POST : id, nom, niveauPMR, imageOld 
+ * Liste des paramètres récupérés depuis $_FILES : image
+ * @return void
+ */
+function modifierBateau() : void {
     $id = $_POST['id'];
     $nom = $_POST['nom'];
     $niveauPMR = $_POST['niveauPMR'];
@@ -129,7 +166,13 @@ function modifierBateau() {
     exit();
 }
 
-function supprimerBateau() {
+/**
+ * Cette fonction supprime un bateau de la base de données et son image associée du repértoire images/bateaux si elle existe.
+ * Elle récupère l'ID du bateau à supprimer depuis $_POST
+ *
+ * @return void
+ */
+function supprimerBateau() : void {
     $id = $_POST['id'];
     $bateau = getBateauById($id);
     $image = $bateau['photo'];
