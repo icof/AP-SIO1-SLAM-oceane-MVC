@@ -139,3 +139,6 @@ class ExempleTest extends TestCase
 
 Une fois le test ajouté, relancez la commande PHPUnit pour vérifier son bon fonctionnement.
 
+## Documentation
+
+Ce projet utilise phpDocumentor pour la documentation technique.
