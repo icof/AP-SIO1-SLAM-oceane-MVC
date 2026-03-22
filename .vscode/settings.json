@@ -1,5 +1,6 @@
 {
     "workbench.startupEditor": "readme",
     "locale": "fr",
-    "editor.wordWrap": "on"
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true
 }

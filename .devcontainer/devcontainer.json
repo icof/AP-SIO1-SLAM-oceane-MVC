@@ -1,31 +1,33 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/php
 {
-    "name": "PHP",
-    // Utilisez le Dockerfile pour construire l'image
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
+	"name": "PHP",
+	// Utilisez le Dockerfile pour construire l'image
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
 
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+	// Liste des fonctionnalités à ajouter au conteneur de développement. // Plus d'informations : https://containers.dev/features.
+	"features": {
+	},
 
-	// Configure tool-specific properties.
+	// Liste des personnalisations du conteneur. 
 	"customizations": {
-		// Configure properties specific to VS Code.
+		// Paramètres spécifiques à VS Code.
 		"vscode": {
 			"settings": {},
-			"extensions": [
-                "kisstkondoros.vscode-codemetrics",
-                "ms-azuretools.vscode-docker",
-                "bmewburn.vscode-intelephense-client",
-                "esbenp.prettier-vscode",
-                "neilbrayfield.php-docblocker",
-                "SonarSource.sonarlint-vscode",
-                "cweijan.vscode-mysql-client2",
-                "donjayamanne.githistory",
-				"Github.copilot"
+			"extensions": [ // Liste des extensions à installer	
+				"kisstkondoros.vscode-codemetrics",
+				"ms-azuretools.vscode-docker",
+				"bmewburn.vscode-intelephense-client",
+				"esbenp.prettier-vscode",
+				"neilbrayfield.php-docblocker",
+				"SonarSource.sonarlint-vscode",
+				"cweijan.vscode-mysql-client2",
+				"donjayamanne.githistory",
+				"xdebug.php-debug"
 			]
 		}
 	},
@@ -39,15 +41,24 @@
 			"label": "site web",
 			"onAutoForward": "notify"
 		},
+		"8001": {
+			"label": "documentation",
+			"onAutoForward": "notify"
+		},
 		"8080": {
 			"label": "phpMyAdmin",
 			"onAutoForward":"notify"
 		}
-	}
+	},
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
+	// Variables d'environnement pour le conteneur
+	"containerEnv": {
+		"MYSQL_ADMIN_USER": "admin",
+		"MYSQL_ADMIN_PASSWORD": "admin_password"
+	},
 
+	// Commande à exécuter après la création du conteneur
+   "postCreateCommand": "chmod +x .devcontainer/setup-lamp.sh && .devcontainer/setup-lamp.sh" // lance l'initialisation complète de l'environnement LAMP
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
