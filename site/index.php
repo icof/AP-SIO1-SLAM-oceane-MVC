@@ -8,7 +8,8 @@ $keywords = "croisière, morbihan";
 $description = "Bienvenue sur le site de la Compagnie Océane, votre partenaire pour des voyages en mer.";
 
 // Fonction pour charger une vue
-function chargerVue(array $response) {
+function chargerVue(array $response)
+{
     $vue = $response['view'];
     $data = $response['data'];
 
@@ -48,7 +49,7 @@ $routes = [
             $id = $_POST['id'] ?? null; // Récupérer l'ID du bateau (null si action = add)
             $response = ChargerModale($action, $id);
             chargerVue($response);
-        } 
+        }
         exit;
     },
     'actionCRUDBateau' => function () {
@@ -71,6 +72,10 @@ $routes = [
                 echo "Action non reconnue.";
                 break;
         }
+    },
+    'checkNomBateau' => function () {
+        include_once "controleur/bateau_controleur.php";
+        verifierNomBateau();
     }
 ];
 

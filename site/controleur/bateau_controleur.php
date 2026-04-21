@@ -1,9 +1,10 @@
 <?php
+
 /** Contrôleur pour gérer les bateaux dans l'application.
-* Il inclut les fonctions pour afficher la liste des bateaux, gérer le CRUD, et charger les vues modales.
-* 
-* @package controleur
-*/
+ * Il inclut les fonctions pour afficher la liste des bateaux, gérer le CRUD, et charger les vues modales.
+ * 
+ * @package controleur
+ */
 include_once __DIR__ . '/../modele/bateau_modele.php';
 
 /**
@@ -12,15 +13,16 @@ include_once __DIR__ . '/../modele/bateau_modele.php';
  *
  * @return array Un tableau contenant le chemin de la vue et les données
  */
-function afficherBateaux() : array {
+function afficherBateaux(): array
+{
     $lesNiveauxPMR = getNiveauxAccessibilite();
-    if ((isset($_POST['niveauPMR'])) && ($_POST['niveauPMR'] != "")){
+    if ((isset($_POST['niveauPMR'])) && ($_POST['niveauPMR'] != "")) {
         $niveauPMR = $_POST['niveauPMR'];
         $lesBateaux = getBateauxParNiveau($niveauPMR);
     } else {
         $lesBateaux = getTousLesBateaux();
     }
-    
+
     // Retourner le chemin de la vue et les données
     return [
         'view' => __DIR__ . '/../vue/bateau_vue.php',
@@ -37,7 +39,8 @@ function afficherBateaux() : array {
  *
  * @return array Un tableau contenant le chemin de la vue et les données
  */
-function afficherCRUDBateaux() : array {
+function afficherCRUDBateaux(): array
+{
     $lesBateaux = getTousLesBateaux();
 
     // Retourner le chemin de la vue et les données
@@ -57,7 +60,8 @@ function afficherCRUDBateaux() : array {
  * @param string|null $id L'ID du bateau (null si action = add)
  * @return array Un tableau contenant le chemin de la vue et les données
  */
-function ChargerModale(string $action, ? string $id) : array {
+function ChargerModale(string $action, ?string $id): array
+{
     if ($id !== "") {
         $id = intval($id);
     }
@@ -91,7 +95,6 @@ function ChargerModale(string $action, ? string $id) : array {
         'view' => $view,
         'data' => $data
     ];
-
 }
 
 /**
@@ -101,7 +104,8 @@ function ChargerModale(string $action, ? string $id) : array {
  * Liste des paramètres récupérés depuis $_FILES : image
  * @return void
  */
-function ajouterBateau() : void {
+function ajouterBateau(): void
+{
     $nom = $_POST['nom'];
     $niveauPMR = intval($_POST['niveauPMR']);
     $image = $_FILES['image'];
@@ -137,7 +141,8 @@ function ajouterBateau() : void {
  * Liste des paramètres récupérés depuis $_FILES : image
  * @return void
  */
-function modifierBateau() : void {
+function modifierBateau(): void
+{
     $id = $_POST['id'];
     $nom = $_POST['nom'];
     $niveauPMR = $_POST['niveauPMR'];
@@ -172,7 +177,8 @@ function modifierBateau() : void {
  *
  * @return void
  */
-function supprimerBateau() : void {
+function supprimerBateau(): void
+{
     $id = $_POST['id'];
     $bateau = getBateauById($id);
     $image = $bateau['photo'];
@@ -190,3 +196,21 @@ function supprimerBateau() : void {
     exit();
 }
 
+/**
+ * Fonction pour vérifier via AJAX si un nom de bateau existe déjà.
+ * Répond en JSON avec {'existe': true/false}.
+ *
+ * @return void
+ */
+function verifierNomBateau(): void
+{
+    header('Content-Type: application/json');
+    $nom = $_POST['nom'] ?? '';
+    if ($nom === '') {
+        echo json_encode(['existe' => false]);
+        exit;
+    }
+    $existe = nomBateauExiste($nom);
+    echo json_encode(['existe' => $existe]);
+    exit;
+}

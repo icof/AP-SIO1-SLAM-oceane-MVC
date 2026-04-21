@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Modèle pour la gestion des bateaux.
  * Ce modèle contient des fonctions pour interagir avec la base de données concernant les bateaux.
@@ -15,7 +16,8 @@ include_once "bd.inc.php"; // fichier de connexion à la base de données
  *
  * @return array Un tableau associatif des niveaux d'accessibilité
  */
-function getNiveauxAccessibilite() : array {
+function getNiveauxAccessibilite(): array
+{
     $connexion = getPDO(); // Utilisation de la connexion à la base de données
     $requete = 'SELECT * FROM niveau_accessibilite';
     $stmt = $connexion->prepare($requete);
@@ -32,7 +34,8 @@ function getNiveauxAccessibilite() : array {
  * @param int $niveauPMR L'ID du niveau d'accessibilité PMR
  * @return array
  */
-function getBateauxParNiveau(int $niveauPMR) : array {
+function getBateauxParNiveau(int $niveauPMR): array
+{
     $connexion = getPDO(); // Utilisation de la connexion à la base de données
     $requete = "SELECT * FROM bateau b JOIN niveau_accessibilite n ON b.niveauPMR=n.idNiveau WHERE b.niveauPMR = :idNiveau ORDER BY b.nom";
     $stmt = $connexion->prepare($requete);
@@ -49,7 +52,8 @@ function getBateauxParNiveau(int $niveauPMR) : array {
  *
  * @return array Un tableau associatif des bateaux
  */
-function getTousLesBateaux() : array {
+function getTousLesBateaux(): array
+{
     $connexion = getPDO(); // Utilisation de la connexion à la base de données
     $requete = "SELECT * FROM bateau b JOIN niveau_accessibilite n ON b.niveauPMR=n.idNiveau ORDER BY b.nom";
     $stmt = $connexion->prepare($requete);
@@ -66,7 +70,8 @@ function getTousLesBateaux() : array {
  * @param int $idBateau L'ID du bateau
  * @return array Un tableau associatif contenant les informations du bateau
  */
-function getBateauById(int $idBateau) : array {
+function getBateauById(int $idBateau): array
+{
     $connexion = getPDO(); // Utilisation de la connexion à la base de données
     $requete = "SELECT * FROM bateau b JOIN niveau_accessibilite n ON b.niveauPMR=n.idNiveau WHERE b.id = :idBateau";
     $stmt = $connexion->prepare($requete);
@@ -86,7 +91,8 @@ function getBateauById(int $idBateau) : array {
  * @param string $image Le chemin de l'image du bateau
  * @return array Un tableau contenant un message de succès ou d'erreur
  */
-function insertBateau(string $nom, int $niveauPMR, string $image) : array{
+function insertBateau(string $nom, int $niveauPMR, string $image): array
+{
     try {
         // Insertion du bateau dans la base de données
         $connexion = getPDO(); // Utilisation de la connexion à la base de données
@@ -125,7 +131,8 @@ function insertBateau(string $nom, int $niveauPMR, string $image) : array{
  * @param string $image Le chemin de l'image du bateau
  * @return array Un tableau contenant un message de succès ou d'erreur
  */
-function updateBateau(int $id, string $nom, int $niveauPMR, string $image) : array {
+function updateBateau(int $id, string $nom, int $niveauPMR, string $image): array
+{
     try {
         // Mise à jour du bateau dans la base de données
         $connexion = getPDO(); // Utilisation de la connexion à la base de données
@@ -140,7 +147,7 @@ function updateBateau(int $id, string $nom, int $niveauPMR, string $image) : arr
         $message['message'] = "Bateau mis à jour avec succès !";
         $message['status'] = "success";
         return $message;
-    } catch (Exception $e) {   
+    } catch (Exception $e) {
         $message['message'] = "Erreur lors de la mise à jour du bateau : " . $e->getMessage();
         $message['status'] = "error";
         return $message;
@@ -154,7 +161,8 @@ function updateBateau(int $id, string $nom, int $niveauPMR, string $image) : arr
  * @param int $id L'ID du bateau à supprimer
  * @return array Un tableau contenant un message de succès ou d'erreur
  */
-function deleteBateau(int $id) : array {
+function deleteBateau(int $id): array
+{
     try {
         // Suppression du bateau dans la base de données
         $connexion = getPDO(); // Utilisation de la connexion à la base de données
@@ -171,4 +179,22 @@ function deleteBateau(int $id) : array {
         $message['status'] = "error";
         return $message;
     }
+}
+
+/**
+ * Fonction pour vérifier si un nom de bateau existe déjà dans la base de données.
+ *
+ * @param string $nom Le nom du bateau à vérifier
+ * @return bool true si le nom existe déjà, false sinon
+ */
+function nomBateauExiste(string $nom): bool
+{
+    $connexion = getPDO();
+    $requete = "SELECT COUNT(*) FROM bateau WHERE LOWER(nom) = LOWER(:nom)";
+    $stmt = $connexion->prepare($requete);
+    $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+    $stmt->execute();
+    $count = (int)$stmt->fetchColumn();
+    $stmt->closeCursor();
+    return $count > 0;
 }
